@@ -112,7 +112,7 @@ resource "azurerm_blueprint_assignment" "example" {
 
 * `location` - (Required) The Azure location of the Assignment.
 
-* `identitiy` - (Required) an identity block, as detailed below.
+* `identity` - (Required) An `identity` block as defined below.
 
 * `version_id` - (Required) The ID of the Published Version of the blueprint to be assigned.
 
@@ -124,17 +124,19 @@ resource "azurerm_blueprint_assignment" "example" {
 
 ~> **NOTE:** Improperly formatted JSON, or missing values required by a Blueprint will cause the assignment to fail.
 
-* `lock_mode` - (Optional) The locking mode of the Blueprint Assignment.  One of `None` (Default), `AllResourcesReadOnly`, or `AlResourcesDoNotDelete`.
+* `lock_mode` - (Optional) The locking mode of the Blueprint Assignment.  One of `None` (Default), `AllResourcesReadOnly`, or `AllResourcesDoNotDelete`.
 
 * `lock_exclude_principals` - (Optional) a list of up to 5 Principal IDs that are permitted to bypass the locks applied by the Blueprint.
 
+* `lock_exclude_actions` - (Optional) a list of up to 200 actions that are permitted to bypass the locks applied by the Blueprint.
+
 ---
 
-An `identity` block supports the following Arguments
+An `identity` block supports the following:
 
-* `type` - (Required) The Identity type for the Managed Service Identity. Currently only `UserAssigned` is supported.
+* `type` - (Required) Specifies the type of Managed Service Identity that should be configured on this Blueprint. Only possible value is `UserAssigned`.
 
-* `user_assigned_identities` - (Required) a list of User Assigned Identity ID's. At least one ID is required.
+* `identity_ids` - (Required) Specifies a list of User Assigned Managed Identity IDs to be assigned to this Blueprint.
 
 
 ## Attribute Reference

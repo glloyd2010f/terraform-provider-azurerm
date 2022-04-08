@@ -48,12 +48,23 @@ output "job_id" {
 
 * `location` - The Azure location where the Stream Analytics Job exists.
 
+* `identity` - (Optional) An `identity` block as defined below.
+
 * `output_error_policy` - The policy which should be applied to events which arrive at the output and cannot be written to the external storage due to being malformed (such as missing column values, column values of wrong type or size). 
 
 * `streaming_units` - The number of streaming units that the streaming job uses.
 
 * `transformation_query` - The query that will be run in the streaming job, [written in Stream Analytics Query Language (SAQL)](https://msdn.microsoft.com/library/azure/dn834998).
 
+---
+
+An `identity` block exports the following:
+
+* `principal_id` - The Principal ID associated with this Managed Service Identity.
+
+* `tenant_id` - The Tenant ID associated with this Managed Service Identity.
+
+* `type` - The identity type of this Managed Service Identity.
 
 ## Timeouts
 

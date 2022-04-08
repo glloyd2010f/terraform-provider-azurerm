@@ -247,10 +247,14 @@ The following arguments are supported:
 * `shared_key` - (Optional) The shared IPSec key. A key could be provided if a
     Site-to-Site, VNet-to-VNet or ExpressRoute connection is created.
 
+* `connection_mode` - (Optional) Connection mode to use. Possible
+values are `Default`, `InitiatorOnly` and `ResponderOnly`. Defaults to `Default`.
+Changing this value will force a resource to be created.
+
 * `connection_protocol` - (Optional) The IKE protocol version to use. Possible
     values are `IKEv1` and `IKEv2`. Defaults to `IKEv2`.
     Changing this value will force a resource to be created.
--> **Note**: Only valid for `IPSec` connections on virtual network gateways with SKU `VpnGw1`, `VpnGw2`, `VpnGw3`, `VpnGw1AZ`, `VpnGw2AZ` or `VpnGw3AZ`.
+-> **Note:** Only valid for `IPSec` connections on virtual network gateways with SKU `VpnGw1`, `VpnGw2`, `VpnGw3`, `VpnGw1AZ`, `VpnGw2AZ` or `VpnGw3AZ`.
 
 * `enable_bgp` - (Optional) If `true`, BGP (Border Gateway Protocol) is enabled
     for this connection. Defaults to `false`.
@@ -278,10 +282,10 @@ The `ipsec_policy` block supports:
     `ECP256`, `ECP384`, or `None`.
 
 * `ike_encryption` - (Required) The IKE encryption algorithm. Valid
-    options are `AES128`, `AES192`, `AES256`, `DES`, or `DES3`.
+    options are `AES128`, `AES192`, `AES256`, `DES`, `DES3`, `GCMAES128`, or `GCMAES256`.
 
 * `ike_integrity` - (Required) The IKE integrity algorithm. Valid
-    options are `MD5`, `SHA1`, `SHA256`, or `SHA384`.
+    options are `GCMAES128`, `GCMAES256`, `MD5`, `SHA1`, `SHA256`, or `SHA384`.
 
 * `ipsec_encryption` - (Required) The IPSec encryption algorithm. Valid
     options are `AES128`, `AES192`, `AES256`, `DES`, `DES3`, `GCMAES128`, `GCMAES192`, `GCMAES256`, or `None`.
@@ -290,7 +294,7 @@ The `ipsec_policy` block supports:
     options are `GCMAES128`, `GCMAES192`, `GCMAES256`, `MD5`, `SHA1`, or `SHA256`.
 
 * `pfs_group` - (Required) The DH group used in IKE phase 2 for new child SA.
-    Valid options are `ECP256`, `ECP384`, `PFS1`, `PFS2`, `PFS2048`, `PFS24`,
+    Valid options are `ECP256`, `ECP384`, `PFS1`, `PFS14`, `PFS2`, `PFS2048`, `PFS24`, `PFSMM`,
     or `None`.
 
 * `sa_datasize` - (Optional) The IPSec SA payload size in KB. Must be at least
@@ -318,6 +322,6 @@ The `timeouts` block allows you to specify [timeouts](https://www.terraform.io/d
 
 Virtual Network Gateway Connections can be imported using their `resource id`, e.g.
 
-```
+```shell
 terraform import azurerm_virtual_network_gateway_connection.exampleConnection /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup1/providers/Microsoft.Network/connections/myConnection1
 ```

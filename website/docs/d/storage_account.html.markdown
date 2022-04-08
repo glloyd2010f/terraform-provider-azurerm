@@ -48,7 +48,7 @@ output "storage_account_tier" {
 
 * `min_tls_version` - The minimum supported TLS version for this storage account.
 
-* `allow_blob_public_access` - Is public access allowed to all blobs or containers in the storage account?
+* `allow_nested_items_to_be_public` - Can nested items in the storage account opt into allowing public access?
 
 * `is_hns_enabled` - Is Hierarchical Namespace enabled?
 
@@ -121,6 +121,13 @@ output "storage_account_tier" {
 * `secondary_blob_connection_string` - The connection string associated with the secondary blob location
 
 ~> **Note:** If there's a Write Lock on the Storage Account, or the account doesn't have permission then these fields will have an empty value [due to a bug in the Azure API](https://github.com/Azure/azure-rest-api-specs/issues/6363)
+
+* `queue_encryption_key_type` - The encryption key type of the queue.
+
+* `table_encryption_key_type` - The encryption key type of the table.
+
+* `infrastructure_encryption_enabled` - Is infrastructure encryption enabled? See [here](https://docs.microsoft.com/en-us/azure/storage/common/infrastructure-encryption-enable/)
+    for more information.
 ---
 
 * `custom_domain` supports the following:

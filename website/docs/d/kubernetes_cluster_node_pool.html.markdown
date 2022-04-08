@@ -40,8 +40,6 @@ In addition to the Arguments listed above - the following Attributes are exporte
 
 * `id` - The ID of the Kubernetes Cluster Node Pool.
 
-* `availability_zones` - A list of Availability Zones in which the Nodes in this Node Pool exists.
-
 * `enable_auto_scaling` - Does this Node Pool have Auto-Scaling enabled?
 
 * `enable_node_public_ip` - Do nodes in this Node Pool have a Public IP Address?
@@ -59,6 +57,8 @@ In addition to the Arguments listed above - the following Attributes are exporte
 * `node_count` - The current number of Nodes in the Node Pool.
 
 * `node_labels` - A map of Kubernetes Labels applied to each Node in this Node Pool.
+
+* `node_public_ip_prefix_id` - Resource ID for the Public IP Addresses Prefix for the nodes in this Agent Pool.
 
 * `node_taints` - A map of Kubernetes Taints applied to each Node in this Node Pool.
 
@@ -83,6 +83,8 @@ In addition to the Arguments listed above - the following Attributes are exporte
 * `vm_size` - The size of the Virtual Machines used in the Virtual Machine Scale Set backing this Node Pool.
 
 * `vnet_subnet_id` - The ID of the Subnet in which this Node Pool exists.
+
+* `zones` - A list of the Availability Zones where the Nodes in this Node Pool exist.
 
 ---
 

@@ -12,7 +12,7 @@ Manages a Microsoft SQL Virtual Machine
 
 ## Example Usage
 
-This example provisions a brief Managed MsSql Virtual Machine. The detailed example of the `azurerm_mssql_virtual_machine` resource can be found in [the `./examples/mssql/mssqlvm` directory within the Github Repository](https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/mssql/mssqlvm)
+This example provisions a brief Managed MsSql Virtual Machine. The detailed example of the `azurerm_mssql_virtual_machine` resource can be found in [the `./examples/mssql/mssqlvm` directory within the Github Repository](https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/mssql/mssqlvm)
 
 ```hcl
 data "azurerm_virtual_machine" "example" {
@@ -43,7 +43,7 @@ The following arguments are supported:
 
 * `virtual_machine_id` - (Required) The ID of the Virtual Machine. Changing this forces a new resource to be created.
 
-* `sql_license_type` - (Optional) The SQL Server license type. Possible values are `AHUB` (Azure Hybrid Benefit) and `PAYG` (Pay-As-You-Go). Changing this forces a new resource to be created.
+* `sql_license_type` - (Optional) The SQL Server license type. Possible values are `AHUB` (Azure Hybrid Benefit), `DR` (Disaster Recovery), and `PAYG` (Pay-As-You-Go). Changing this forces a new resource to be created.
 
 * `auto_backup` (Optional) An `auto_backup` block as defined below. This block can be added to an existing resource, but removing this block forces a new resource to be created.
 

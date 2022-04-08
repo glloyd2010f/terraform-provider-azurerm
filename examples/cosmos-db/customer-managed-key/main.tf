@@ -71,11 +71,10 @@ resource "azurerm_cosmosdb_account" "example" {
   key_vault_key_id    = azurerm_key_vault_key.example.id
 
   consistency_policy {
-    consistency_level       = "Strong"
+    consistency_level = "Strong"
   }
 
   geo_location {
-    prefix            = "${var.prefix}-customid"
     location          = azurerm_resource_group.example.location
     failover_priority = 0
   }

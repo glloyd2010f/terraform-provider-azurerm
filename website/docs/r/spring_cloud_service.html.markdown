@@ -42,8 +42,8 @@ resource "azurerm_spring_cloud_service" "example" {
   }
 
   trace {
-    instrumentation_key = azurerm_application_insights.example.instrumentation_key
-    sample_rate         = 10.0
+    connection_string = azurerm_application_insights.example.connection_string
+    sample_rate       = 10.0
   }
 
   tags = {
@@ -64,7 +64,7 @@ The following arguments are supported:
 
 -> **Note:** At this time Azure Spring Cloud Service is only supported in a subset of regions (including `East US`, `South East Asia`, `West Europe` and `West US 2`.
 
-* `sku_name` - (Optional) Specifies the SKU Name for this Spring Cloud Service. Possible values are `B0` and `S0`. Defaults to `S0`.
+* `sku_name` - (Optional) Specifies the SKU Name for this Spring Cloud Service. Possible values are `B0`, `S0` and `E0`. Defaults to `S0`.
 
 * `network` - (Optional) A `network` block as defined below. Changing this forces a new resource to be created.
 
@@ -146,7 +146,7 @@ The `ssh_auth` block supports the following:
 
 The `trace` block supports the following:
 
-* `instrumentation_key` - (Required) The Instrumentation Key used for Application Insights.
+* `connection_string` - (Required) The connection string used for Application Insights.
 
 * `sample_rate` - (Optional) The sampling rate of Application Insights Agent. Must be between `0.0` and `100.0`. Defaults to `10.0`.
 
@@ -157,6 +157,22 @@ The following attributes are exported:
 * `id` - The ID of the Spring Cloud Service.
 
 * `outbound_public_ip_addresses` - A list of the outbound Public IP Addresses used by this Spring Cloud Service.
+
+* `required_network_traffic_rules` - A list of `required_network_traffic_rules` blocks as defined below.
+
+---
+
+The `required_network_traffic_rules` supports the following:
+
+* `direction` - The direction of required traffic. Possible values are `Inbound`, `Outbound`.
+
+* `fqdns` - The FQDN list of required traffic.
+
+* `ips` - The ip list of required traffic.
+
+* `port` - The port of required traffic.
+
+* `protocol` - The protocol of required traffic.
 
 ## Timeouts
 

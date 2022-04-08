@@ -52,8 +52,7 @@ resource "azurerm_storage_account" "example" {
 }
 
 resource "azurerm_storage_account_network_rules" "test" {
-  resource_group_name  = azurerm_resource_group.test.name
-  storage_account_name = azurerm_storage_account.test.name
+  storage_account_id = azurerm_storage_account.test.id
 
   default_action             = "Allow"
   ip_rules                   = ["127.0.0.1"]
@@ -66,9 +65,7 @@ resource "azurerm_storage_account_network_rules" "test" {
 
 The following arguments are supported:
 
-* `storage_account_name` - (Required) Specifies the name of the storage account. Changing this forces a new resource to be created. This must be unique across the entire Azure service, not just within the resource group.
-
-* `resource_group_name` - (Required) The name of the resource group in which to create the storage account. Changing this forces a new resource to be created.
+* `storage_account_id` - (Optional) Specifies the ID of the storage account. Changing this forces a new resource to be created.
 
 * `default_action` - (Required) Specifies the default action of allow or deny when no other rules match. Valid options are `Deny` or `Allow`.
 
@@ -87,6 +84,17 @@ The following arguments are supported:
 * `virtual_network_subnet_ids` - (Optional) A list of virtual network subnet ids to to secure the storage account.
 
 -> **NOTE** User has to explicitly set `virtual_network_subnet_ids` to empty slice (`[]`) to remove it.
+
+* `private_link_access` - (Optional) One or More `private_link_access` block as defined below.
+
+---
+
+A `private_link_access` block supports the following:
+
+* `endpoint_resource_id` - (Required) The resource id of the resource access rule to be granted access.
+
+* `endpoint_tenant_id` - (Optional) The tenant id of the resource of the resource access rule to be granted access. Defaults to the current tenant id.
+
 
 ## Attributes Reference
 

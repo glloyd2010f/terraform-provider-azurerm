@@ -96,13 +96,22 @@ A `criteria` block supports the following:
 * `recommendation_type` - (Optional) The recommendation type of the event. It is only allowed when `category` is `Recommendation`.
 * `recommendation_category` - (Optional) The recommendation category of the event. Possible values are `Cost`, `Reliability`, `OperationalExcellence` and `Performance`. It is only allowed when `category` is `Recommendation`.
 * `recommendation_impact` - (Optional) The recommendation impact of the event. Possible values are `High`, `Medium` and `Low`. It is only allowed when `category` is `Recommendation`.
+* `resource_health` - (Optional) A block to define fine grain resource health settings.
 * `service_health` - (Optional) A block to define fine grain service health settings.
+
+---
+
+A `resource_health` block supports the following:
+
+* `current` (Optional) The current resource health statuses that will log an alert. Possible values are `Available`, `Degraded`, `Unavailable` and `Unknown`.
+* `previous` (Optional) The previous resource health statuses that will log an alert. Possible values are `Available`, `Degraded`, `Unavailable` and `Unknown`.
+* `reason` (Optional)  The reason that will log an alert. Possible values are `PlatformInitiated` (such as a problem with the resource in an affected region of an Azure incident), `UserInitiated` (such as a shutdown request of a VM) and `Unknown`.
 
 ---
 
 A `service_health` block supports the following:
 
-* `events` (Optional) Events this alert will monitor Possible values are `Incident`, `Maintenance`, `Informational`, and `ActionRequired`.
+* `events` (Optional) Events this alert will monitor Possible values are `Incident`, `Maintenance`, `Informational`, `ActionRequired` and `Security`.
 * `locations` (Optional) Locations this alert will monitor. For example, `West Europe`. Defaults to `Global`.
 * `services` (Optional) Services this alert will monitor. For example, `Activity Logs & Alerts`, `Action Groups`. Defaults to all Services.
 
@@ -128,5 +137,5 @@ The `timeouts` block allows you to specify [timeouts](https://www.terraform.io/d
 Activity log alerts can be imported using the `resource id`, e.g.
 
 ```shell
-terraform import azurerm_monitor_activity_log_alert.example /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/microsoft.insights/activityLogAlerts/myalertname
+terraform import azurerm_monitor_activity_log_alert.example /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Insights/activityLogAlerts/myalertname
 ```

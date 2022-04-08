@@ -89,23 +89,6 @@ resource "azurerm_key_vault_certificate" "example" {
     contents = filebase64("certificate-to-import.pfx")
     password = ""
   }
-
-  certificate_policy {
-    issuer_parameters {
-      name = "Self"
-    }
-
-    key_properties {
-      exportable = true
-      key_size   = 2048
-      key_type   = "RSA"
-      reuse_key  = false
-    }
-
-    secret_properties {
-      content_type = "application/x-pkcs12"
-    }
-  }
 }
 ```
 
@@ -245,7 +228,9 @@ The following arguments are supported:
 
 * `certificate` - (Optional) A `certificate` block as defined below, used to Import an existing certificate.
 
-* `certificate_policy` - (Required) A `certificate_policy` block as defined below.
+* `certificate_policy` - (Optional) A `certificate_policy` block as defined below.
+
+~> **NOTE:** When creating a Key Vault Certificate, at least one of `certificate` or `certificate_policy` is required. Provide `certificate` to import an existing certificate, `certificate_policy` to generate a new certificate.
 
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 
@@ -270,9 +255,10 @@ The following arguments are supported:
 
 `key_properties` supports the following:
 
-* `exportable` - (Required) Is this Certificate Exportable? Changing this forces a new resource to be created.
-* `key_size` - (Required) The size of the Key used in the Certificate. Possible values include `2048`, `3072`, and `4096`. Changing this forces a new resource to be created.
-* `key_type` - (Required) Specifies the Type of Key, such as `RSA`. Changing this forces a new resource to be created.
+* `curve` - (Optional) Specifies the curve to use when creating an `EC` key. Possible values are `P-256`, `P-256K`, `P-384`, and `P-521`. This field will be required in a future release if `key_type` is `EC` or `EC-HSM`. Changing this forces a new resource to be created.
+* `exportable` - (Required) Is this certificate exportable? Changing this forces a new resource to be created.
+* `key_size` - (Optional) The size of the key used in the certificate. Possible values include `2048`, `3072`, and `4096` for `RSA` keys, or `256`, `384`, and `521` for `EC` keys. This property is required when using RSA keys. Changing this forces a new resource to be created.
+* `key_type` - (Required) Specifies the type of key, such as `RSA` or `EC`. Changing this forces a new resource to be created.
 * `reuse_key` - (Required) Is the key reusable? Changing this forces a new resource to be created.
 
 `lifetime_action` supports the following:
@@ -315,6 +301,8 @@ The following attributes are exported:
 * `id` - The Key Vault Certificate ID.
 * `secret_id` - The ID of the associated Key Vault Secret.
 * `version` - The current version of the Key Vault Certificate.
+* `versionless_id` - The Base ID of the Key Vault Certificate.
+* `versionless_secret_id` - The Base ID of the Key Vault Secret.
 * `certificate_data` - The raw Key Vault Certificate data represented as a hexadecimal string.
 * `certificate_data_base64` - The Base64 encoded Key Vault Certificate data.
 * `thumbprint` - The X509 Thumbprint of the Key Vault Certificate represented as a hexadecimal string.

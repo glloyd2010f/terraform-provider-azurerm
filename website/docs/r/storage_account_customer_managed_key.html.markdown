@@ -10,6 +10,8 @@ description: |-
 
 Manages a Customer Managed Key for a Storage Account.
 
+~> **NOTE:** It's possible to define a Customer Managed Key both within [the `azurerm_storage_account` resource](storage_account.html) via the `customer_managed_key` block and by using [the `azurerm_storage_account_customer_managed_key` resource](storage_account_customer_managed_key.html). However it's not possible to use both methods to manage a Customer Managed Key for a Storage Account, since there'll be conflicts.
+
 ## Example Usage
 
 ```hcl
@@ -94,6 +96,8 @@ The following arguments are supported:
 * `key_name` - (Required) The name of Key Vault Key.
 
 * `key_version` - (Optional) The version of Key Vault Key. Remove or omit this argument to enable Automatic Key Rotation.
+
+* `user_assigned_identity_id` - (Optional) The ID of a user assigned identity.
 
 ## Attributes Reference
 

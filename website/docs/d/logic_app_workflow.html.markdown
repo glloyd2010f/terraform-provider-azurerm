@@ -59,6 +59,20 @@ The following attributes are exported:
 
 * `workflow_outbound_ip_addresses` - The list of outgoing ip addresses of workflow.
 
+* `identity` - An `identity` block as defined below.
+
+---
+
+An `identity` block exports the following:
+
+* `type` - The type of Managed Service Identity that is configured on this API Management Service.
+
+* `principal_id` - The Principal ID of the System Assigned Managed Service Identity that is configured on this API Management Service.
+
+* `tenant_id` - The Tenant ID of the System Assigned Managed Service Identity that is configured on this API Management Service.
+
+* `identity_ids` - The list of User Assigned Managed Identity IDs assigned to this API Management Service.
+
 ## Timeouts
 
 The `timeouts` block allows you to specify [timeouts](https://www.terraform.io/docs/configuration/resources.html#timeouts) for certain actions:

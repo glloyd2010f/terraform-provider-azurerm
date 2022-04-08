@@ -37,11 +37,19 @@ The following arguments are supported:
 
 * `github_configuration` - (Optional) A `github_configuration` block as defined below.
 
+* `global_parameter` - (Optional)  A list of `global_parameter` blocks as defined above.
+
 * `identity` - (Optional) An `identity` block as defined below.
 
 * `vsts_configuration` - (Optional) A `vsts_configuration` block as defined below.
 
+* `managed_virtual_network_enabled` - (Optional) Is Managed Virtual Network enabled?
+
 * `public_network_enabled` - (Optional) Is the Data Factory visible to the public network? Defaults to `true`.
+
+* `customer_managed_key_id` -  (Optional) Specifies the Azure Key Vault Key ID to be used as the Customer Managed Key (CMK) for double encryption. Required with user assigned identity.
+
+* `customer_managed_key_identity_id` - (Optional) Specifies the ID of the user assigned identity associated with the Customer Managed Key. Must be supplied if `customer_managed_key_id` is set.
 
 * `tags` - (Optional) A mapping of tags to assign to the resource.
 
@@ -63,9 +71,25 @@ A `github_configuration` block supports the following:
 
 ---
 
-A `identity` block supports the following:
+A `global_parameter` block supports the following:
 
-* `type` - (Required) Specifies the identity type of the Data Factory. At this time the only allowed value is `SystemAssigned`.
+* `name` - (Required) Specifies the global parameter name.
+
+* `type` - (Required) Specifies the global parameter type. Possible Values are `Array`, `Bool`, `Float`, `Int`, `Object` or `String`.
+
+* `value` - (Required) Specifies the global parameter value.
+
+-> **Note:** For type `Array` and `Object` it is recommended to use `jsonencode()` for the value
+
+---
+
+An `identity` block supports the following:
+
+* `type` - (Required) Specifies the type of Managed Service Identity that should be configured on this Data Factory. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned` (to enable both).
+
+* `identity_ids` - (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this Data Factory.
+
+~> **NOTE:** This is required when `type` is set to `UserAssigned` or `SystemAssigned, UserAssigned`.
 
 ---
 
@@ -93,11 +117,11 @@ The following attributes are exported:
 
 ---
 
-The `identity` block exports the following:
+An `identity` block exports the following:
 
-* `principal_id` - The ID of the Principal (Client) in Azure Active Directory
+* `principal_id` - The Principal ID associated with this Managed Service Identity.
 
-* `tenant_id` - The ID of the Azure Active Directory Tenant.
+* `tenant_id` - The Tenant ID associated with this Managed Service Identity.
 
 
 ## Timeouts

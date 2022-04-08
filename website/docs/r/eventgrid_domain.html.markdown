@@ -40,6 +40,8 @@ The following arguments are supported:
 
 * `location` - (Required) Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created.
 
+* `identity` - (Optional) An `identity` block as defined below.
+
 * `input_schema` - (Optional) Specifies the schema in which incoming events will be published to this domain. Allowed values are `CloudEventSchemaV1_0`, `CustomEventSchema`, or `EventGridSchema`. Defaults to `eventgridschema`. Changing this forces a new resource to be created.
 
 * `input_mapping_fields` - (Optional) A `input_mapping_fields` block as defined below.
@@ -48,9 +50,27 @@ The following arguments are supported:
 
 * `public_network_access_enabled` - (Optional) Whether or not public network access is allowed for this server. Defaults to `true`.
 
+* `local_auth_enabled` - (Optional) Whether local authentication methods is enabled for the EventGrid Domain. Defaults to `true`.
+
+* `auto_create_topic_with_first_subscription` - (Optional) Whether to create the domain topic when the first event subscription at the scope of the domain topic is created. Defaults to `true`.
+
+* `auto_delete_topic_with_last_subscription` - (Optional) Whether to delete the domain topic when the last event subscription at the scope of the domain topic is deleted. Defaults to `true`.
+
 * `inbound_ip_rule` - (Optional) One or more `inbound_ip_rule` blocks as defined below.
 
 * `tags` - (Optional) A mapping of tags to assign to the resource.
+
+---
+
+A `identity` block supports the following:
+
+* `type` - (Required) Specifies the type of Managed Service Identity that should be configured on this Event Grid Domain. Possible values are `SystemAssigned`, `UserAssigned`.
+
+* `identity_ids` - (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this Event Grid Domain.
+
+~> **NOTE:** This is required when `type` is set to `UserAssigned`
+
+~> **NOTE:** When `type` is set to `SystemAssigned`, The assigned `principal_id` and `tenant_id` can be retrieved after the Event Grid Domain has been created. More details are available below.
 
 ---
 
@@ -98,9 +118,19 @@ The following attributes are exported:
 
 * `secondary_access_key` - The Secondary Shared Access Key associated with the EventGrid Domain.
 
+* `identity` - An `identity` block as defined below, which contains the Managed Service Identity information for this Event Grid Domain.
+
+---
+
+An `identity` block exports the following:
+
+* `principal_id` - The Principal ID associated with this Managed Service Identity.
+
+* `tenant_id` - The Tenant ID associated with this Managed Service Identity.
+
+---
+
 ## Timeouts
-
-
 
 The `timeouts` block allows you to specify [timeouts](https://www.terraform.io/docs/configuration/resources.html#timeouts) for certain actions:
 

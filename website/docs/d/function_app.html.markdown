@@ -11,6 +11,8 @@ description: |-
 
 Use this data source to access information about a Function App.
 
+!> **Note:** The `azurerm_function_app` data source is deprecated in version 3.0 of the AzureRM provider and will be removed in version 4.0. Please use the [`azurerm_linux_function_app`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/linux_function_app) and [`azurerm_windows_function_app`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/windows_function_app) data sources instead.
+
 ## Example Usage
 
 ```hcl
@@ -114,7 +116,13 @@ A `site_config` block exports the following:
 
 * `always_on` - Is the app loaded at all times?
 
+* `app_scale_limit` - The number of workers this function app can scale out to. Only applicable to apps on the Consumption and Premium plan.
+
 * `cors` - A `cors` block as defined above.
+
+* `dotnet_framework_version` - The version of the .net framework's CLR used in this App Service.
+
+* `elastic_instance_minimum` - The number of minimum instances for this function app. Only applicable to apps on the Premium plan.
 
 * `http2_enabled` - Is HTTP2 Enabled on this App Service?
 
@@ -122,7 +130,11 @@ A `site_config` block exports the following:
 
 * `ip_restriction` - One or more `ip_restriction` blocks as defined above.
 
+* `java_version` - Java version hosted by the function app in Azure.
+
 * `pre_warmed_instance_count` - The number of pre-warmed instances for this function app. Only applicable to apps on the Premium plan.
+
+* `runtime_scale_monitoring_enabled` - Is Runtime Scale Monitoring Enabled on this function app?
 
 * `scm_use_main_ip_restriction` - IP security restrictions for scm to use main.  
 
@@ -135,6 +147,8 @@ A `site_config` block exports the following:
 * `scm_type` - The type of Source Control enabled for this App Service.
 
 * `use_32_bit_worker_process` - Does the App Service run in 32 bit mode, rather than 64 bit mode?
+
+* `vnet_route_all_enabled` - (Optional) Should all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied?
 
 * `websockets_enabled` - Are WebSockets enabled for this App Service?
 
@@ -156,11 +170,13 @@ A `source_control` block exports the following:
 
 An `identity` block exports the following:
 
-* `principal_id` - The ID of the System Managed Service Principal assigned to the function app.
+* `identity_ids` - A list of User Assigned Identity IDs assigned to the Function App.
 
-* `tenant_id` - The ID of the Tenant of the System Managed Service Principal assigned to the function app.
+* `principal_id` - The ID of the Managed Identity assigned to the Function App.
 
-* `type` - The identity type of the Managed Identity assigned to the function app.
+* `tenant_id` - The ID of the Tenant where the Managed Identity assigned to the Function App is located.
+
+* `type` - The identity type of the Managed Identity assigned to the Function App.
 
 ## Timeouts
 

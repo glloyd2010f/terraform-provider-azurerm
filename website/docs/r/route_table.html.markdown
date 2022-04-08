@@ -25,7 +25,7 @@ resource "azurerm_resource_group" "example" {
 }
 
 resource "azurerm_route_table" "example" {
-  name                          = "acceptanceTestSecurityGroup1"
+  name                          = "example-route-table"
   location                      = azurerm_resource_group.example.location
   resource_group_name           = azurerm_resource_group.example.name
   disable_bgp_route_propagation = false
@@ -64,7 +64,7 @@ Elements of `route` support:
 
 * `name` - (Required) The name of the route.
 
-* `address_prefix` - (Required) The destination CIDR to which the route applies, such as 10.1.0.0/16
+* `address_prefix` - (Required) The destination CIDR to which the route applies, such as 10.1.0.0/16. Tags such as `VirtualNetwork`, `AzureLoadBalancer` or `Internet` can also be used.
 
 * `next_hop_type` - (Required) The type of Azure hop the packet should be sent to. Possible values are `VirtualNetworkGateway`, `VnetLocal`, `Internet`, `VirtualAppliance` and `None`.
 

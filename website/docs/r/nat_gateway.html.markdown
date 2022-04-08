@@ -60,13 +60,13 @@ The following arguments are supported:
 
 * `public_ip_address_ids` - (Optional / **Deprecated in favour of `azurerm_nat_gateway_public_ip_association`**) A list of Public IP Address ID's which should be associated with the NAT Gateway resource.
 
-* `public_ip_prefix_ids` - (Optional) A list of Public IP Prefix ID's which should be associated with the NAT Gateway resource.
+* `public_ip_prefix_ids` - (Optional) / **Deprecated in favour of `azurerm_nat_gateway_public_ip_prefix_association`**) A list of Public IP Prefix ID's which should be associated with the NAT Gateway resource.
 
 * `sku_name` - (Optional) The SKU which should be used. At this time the only supported value is `Standard`. Defaults to `Standard`.
 
 * `tags` - (Optional) A mapping of tags to assign to the resource. Changing this forces a new resource to be created.
 
-* `zones` - (Optional) A list of availability zones where the NAT Gateway should be provisioned. Changing this forces a new resource to be created.
+* `zones` - (Optional) Specifies a list of Availability Zones in which this NAT Gateway should be located. Changing this forces a new NAT Gateway to be created.
 
 ## Attributes Reference
 

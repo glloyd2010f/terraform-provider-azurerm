@@ -44,7 +44,6 @@ resource "azurerm_hdinsight_kafka_cluster" "example" {
   }
 
   gateway {
-    enabled  = true
     username = "acctestusrgw"
     password = "TerrAform123!"
   }
@@ -103,7 +102,9 @@ The following arguments are supported:
 
 * `tier` - (Required) Specifies the Tier which should be used for this HDInsight Kafka Cluster. Possible values are `Standard` or `Premium`. Changing this forces a new resource to be created.
 
-* `min_tls_version` - (Optional) The minimal supported TLS version. Possible values are 1.0, 1.1 or 1.2. Changing this forces a new resource to be created.
+* `tls_min_version` - (Optional) The minimal supported TLS version. Possible values are `1.0`, `1.1` or `1.2`. Changing this forces a new resource to be created.
+
+* `encryption_in_transit_enabled` - (Optional) Whether encryption in transit is enabled for this HDInsight Kafka Cluster. Changing this forces a new resource to be created.
 
 ~> **NOTE:** Starting on June 30, 2020, Azure HDInsight will enforce TLS 1.2 or later versions for all HTTPS connections. For more information, see [Azure HDInsight TLS 1.2 Enforcement](https://azure.microsoft.com/en-us/updates/azure-hdinsight-tls-12-enforcement/).
 
@@ -115,7 +116,9 @@ The following arguments are supported:
 
 * `monitor` - (Optional) A `monitor` block as defined below.
 
-* `rest_proxy` - (Optional) A `rest_proxy` block as defined below. 
+* `rest_proxy` - (Optional) A `rest_proxy` block as defined below.
+
+* `security_profile` - (Optional) A `security_profile` block as defined below.
 
 ---
 
@@ -126,8 +129,6 @@ A `component_version` block supports the following:
 ---
 
 A `gateway` block supports the following:
-
-* `enabled` - (Optional/ **Deprecated) Is the Ambari portal enabled? The HDInsight API doesn't support disabling gateway anymore.
 
 * `password` - (Required) The password used for the Ambari Portal.
 
@@ -206,8 +207,6 @@ A `worker_node` block supports the following:
 * `username` - (Required) The Username of the local administrator for the Worker Nodes. Changing this forces a new resource to be created.
 
 * `vm_size` - (Required) The Size of the Virtual Machine which should be used as the Worker Nodes. Changing this forces a new resource to be created.
-
-* `min_instance_count` - (Optional / **Deprecated** ) The minimum number of instances which should be run for the Worker Nodes. Changing this forces a new resource to be created.
 
 * `password` - (Optional) The Password associated with the local administrator for the Worker Nodes. Changing this forces a new resource to be created.
 
@@ -322,8 +321,29 @@ A `monitor` block supports the following:
 
 A `rest_proxy` block supports the following:
 
-* `security_group_id` - (Required) The Azure Active Directory Security Group ID.
+* `security_group_id` - (Required) The Azure Active Directory Security Group ID. Changing this forces a new resource to be created.
 
+* `security_group_name` - (Optional) The Azure Active Directory Security Group name. Changing this forces a new resource to be created.
+
+-> **Note:** The `security_group_name` property will be Required in version 3.0 of the AzureRM Provider.
+
+---
+
+A `security_profile` block supports the following:
+
+* `aadds_resource_id` - (Required) The resource ID of the Azure Active Directory Domain Service. Changing this forces a new resource to be created.
+
+* `domain_name` - (Required) The name of the Azure Active Directory Domain. Changing this forces a new resource to be created.
+
+* `domain_username` - (Required) The username of the Azure Active Directory Domain. Changing this forces a new resource to be created.
+
+* `domain_user_password` - (Required) The user password of the Azure Active Directory Domain. Changing this forces a new resource to be created.
+
+* `ldaps_urls` - (Required) A list of the LDAPS URLs to communicate with the Azure Active Directory. Changing this forces a new resource to be created.
+
+* `msi_resource_id` - (Required) The User Assigned Identity for the HDInsight Cluster. Changing this forces a new resource to be created.
+
+* `cluster_users_group_dns` - (Optional) A list of the distinguished names for the cluster user groups. Changing this forces a new resource to be created.
 
 ## Attributes Reference
 

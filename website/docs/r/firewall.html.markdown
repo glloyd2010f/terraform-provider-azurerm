@@ -80,11 +80,11 @@ The following arguments are supported:
 
 * `threat_intel_mode` - (Optional) The operation mode for threat intelligence-based filtering. Possible values are: `Off`, `Alert`,`Deny` and `""`(empty string). Defaults to `Alert`.
 
--> **NOTE**: If `virtual_hub_settting` is specified, the `threat_intel_mode` has to be explicitly set as `""`.
+-> **NOTE:** If `virtual_hub_settting` is specified, the `threat_intel_mode` has to be explicitly set as `""`.
 
 * `virtual_hub` - (Optional) A `virtual_hub` block as documented below.
 
-* `zones` - (Optional) Specifies the availability zones in which the Azure Firewall should be created. Changing this forces a new resource to be created.
+* `zones` - (Optional) Specifies a list of Availability Zones in which this Azure Firewall should be located. Changing this forces a new Azure Firewall to be created.
 
 -> **Please Note**: Availability Zones are [only supported in several regions at this time](https://docs.microsoft.com/en-us/azure/availability-zones/az-overview).
 

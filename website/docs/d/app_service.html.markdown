@@ -10,6 +10,8 @@ description: |-
 
 Use this data source to access information about an existing App Service.
 
+!> **Note:** The `azurerm_app_service` data source is deprecated in version 3.0 of the AzureRM provider and will be removed in version 4.0. Please use the [`azurerm_linux_web_app`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/linux_web_app) and [`azurerm_windows_web_app`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/windows_web_app) data sources instead.
+
 ## Example Usage
 
 ```hcl
@@ -120,6 +122,10 @@ An `scm_ip_restriction` block exports the following:
 
 A `site_config` block exports the following:
 
+* `acr_use_managed_identity_credentials` - Are Managed Identity Credentials used for Azure Container Registry pull.
+
+* `acr_user_managed_identity_client_id` - The User Managed Identity Client Id.
+
 * `always_on` - Is the app loaded at all times?
 
 * `app_command_line` - App command line to launch.
@@ -172,7 +178,10 @@ A `site_config` block exports the following:
 
 * `use_32_bit_worker_process` - Does the App Service run in 32 bit mode, rather than 64 bit mode?
 
+* `vnet_route_all_enabled` - (Optional) Should all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied?
+
 * `websockets_enabled` - Are WebSockets enabled for this App Service?
+
 
 ---
 

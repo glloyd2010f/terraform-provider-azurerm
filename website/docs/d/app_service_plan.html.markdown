@@ -10,6 +10,8 @@ description: |-
 
 Use this data source to access information about an existing App Service Plan (formerly known as a `Server Farm`).
 
+!> **Note:** The `azurerm_app_service_plan` data source is deprecated in version 3.0 of the AzureRM provider and will be removed in version 4.0. Please use the [`azurerm_service_plan`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/service_plan) data source instead.
+
 ## Example Usage
 
 ```hcl
@@ -53,6 +55,8 @@ output "app_service_plan_id" {
 * `is_xenon` - A flag that indicates if it's a xenon plan (support for Windows Container)
 
 * `maximum_number_of_workers` - The maximum number of workers supported with the App Service Plan's sku.
+
+* `zone_redundant` - App Service Plan perform availability zone balancing.
 
 ---
 

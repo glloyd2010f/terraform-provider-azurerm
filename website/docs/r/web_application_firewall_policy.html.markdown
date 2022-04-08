@@ -122,10 +122,6 @@ The following arguments are supported:
 
 * `managed_rules` - (Required) A `managed_rules` blocks as defined below.
 
-* `http_listener_ids` - (Optional) A list of HTTP Listener IDs from an `azurerm_application_gateway`.
-
-* `path_based_rule_ids` - (Optional) A list of URL Path Map Path Rule IDs from an `azurerm_application_gateway`.
-
 * `tags` - (Optional) A mapping of tags to assign to the Web Application Firewall Policy.
 
 ---
@@ -170,13 +166,13 @@ The `policy_settings` block supports the following:
 
 * `enabled` - (Optional) Describes if the policy is in enabled state or disabled state. Defaults to `true`.
 
-* `mode` - (Optional) Describes if it is in detection mode or prevention mode at the policy level. Defaults to `Prevention`.
+* `mode` - (Optional) Describes if it is in detection mode or prevention mode at the policy level. Valid values are `Detection` and `Prevention`. Defaults to `Prevention`.
 
-* `file_upload_limit_in_mb` - (Optional) The File Upload Limit in MB. Accepted values are in the range `1` to `750`. Defaults to `100`.
+* `file_upload_limit_in_mb` - (Optional) The File Upload Limit in MB. Accepted values are in the range `1` to `4000`. Defaults to `100`.
 
 * `request_body_check` - (Optional) Is Request Body Inspection enabled? Defaults to `true`.
 
-* `max_request_body_size_in_kb` - (Optional) The Maximum Request Body Size in KB.  Accepted values are in the range `8` to `128`. Defaults to `128`.
+* `max_request_body_size_in_kb` - (Optional) The Maximum Request Body Size in KB.  Accepted values are in the range `8` to `2000`. Defaults to `128`.
 
 ---
 
@@ -219,6 +215,10 @@ The `rule_group_override` block supports the following:
 The following attributes are exported:
 
 * `id` - The ID of the Web Application Firewall Policy.
+
+* `http_listener_ids` - A list of HTTP Listener IDs from an `azurerm_application_gateway`.
+
+* `path_based_rule_ids` - A list of URL Path Map Path Rule IDs from an `azurerm_application_gateway`.
 
 ## Timeouts
 

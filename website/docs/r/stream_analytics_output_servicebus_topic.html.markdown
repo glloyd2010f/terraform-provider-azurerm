@@ -31,8 +31,7 @@ resource "azurerm_servicebus_namespace" "example" {
 
 resource "azurerm_servicebus_topic" "example" {
   name                = "example-topic"
-  resource_group_name = data.azurerm_resource_group.example.name
-  namespace_name      = azurerm_servicebus_namespace.example.name
+  namespace_id        = azurerm_servicebus_namespace.example.id
   enable_partitioning = true
 }
 
@@ -44,6 +43,7 @@ resource "azurerm_stream_analytics_output_servicebus_topic" "example" {
   servicebus_namespace      = azurerm_servicebus_namespace.example.name
   shared_access_policy_key  = azurerm_servicebus_namespace.example.default_primary_key
   shared_access_policy_name = "RootManageSharedAccessKey"
+  property_columns          = ["col1", "col2"]
 
   serialization {
     format = "Avro"
@@ -70,6 +70,8 @@ The following arguments are supported:
 * `shared_access_policy_name` - (Required) The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc.
 
 * `serialization` - (Required) A `serialization` block as defined below.
+
+* `property_columns` - (Optional) A list of property columns to add to the Service Bus Topic output.
 
 ---
 

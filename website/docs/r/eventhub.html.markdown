@@ -49,7 +49,9 @@ The following arguments are supported:
 
 * `resource_group_name` - (Required) The name of the resource group in which the EventHub's parent Namespace exists. Changing this forces a new resource to be created.
 
-* `partition_count` - (Required) Specifies the current number of shards on the Event Hub. Changing this forces a new resource to be created.
+* `partition_count` - (Required) Specifies the current number of shards on the Event Hub.
+
+~> **Note:** `partition_count` cannot be changed unless Eventhub Namespace sku is `Premium`.
 
 ~> **Note:** When using a dedicated Event Hubs cluster, maximum value of `partition_count` is 1024. When using a shared parent EventHub Namespace, maximum value is 32.
 
@@ -58,6 +60,8 @@ The following arguments are supported:
 ~> **Note:** When using a dedicated Event Hubs cluster, maximum value of `message_retention` is 90 days. When using a shared parent EventHub Namespace, maximum value is 7 days; or 1 day when using a Basic SKU for the shared parent EventHub Namespace.
 
 * `capture_description` - (Optional) A `capture_description` block as defined below.
+
+* `status` - (Optional) Specifies the status of the Event Hub resource. Possible values are `Active`, `Disabled` and `SendDisabled`. Defaults to `Active`.
 
 ---
 

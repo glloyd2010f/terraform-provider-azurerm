@@ -66,6 +66,8 @@ data "azurerm_storage_account_sas" "example" {
     create  = true
     update  = false
     process = false
+    tag     = false
+    filter  = false
   }
 }
 
@@ -78,6 +80,7 @@ output "sas_url_query_string" {
 
 * `connection_string` - The connection string for the storage account to which this SAS applies. Typically directly from the `primary_connection_string` attribute of a terraform created `azurerm_storage_account` resource.
 * `https_only` - (Optional) Only permit `https` access. If `false`, both `http` and `https` are permitted. Defaults to `true`.
+* `ip_addresses` - (Optional) IP address, or a range of IP addresses, from which to accept requests. When specifying a range, note that the range is inclusive.  
 * `signed_version` - (Optional) Specifies the signed storage service version to use to authorize requests made with this account SAS. Defaults to `2017-07-29`.
 * `resource_types` - A `resource_types` block as defined below.
 * `services` - A `services` block as defined below.
@@ -121,6 +124,8 @@ A `permissions` block contains:
 * `create` - Should Create permissions be enabled for this SAS?
 * `update` - Should Update permissions be enabled for this SAS?
 * `process` - Should Process permissions be enabled for this SAS?
+* `tag` - Should Get / Set Index Tags permissions be enabled for this SAS?
+* `filter` - Should Filter by Index Tags permissions be enabled for this SAS?
 
 Refer to the [SAS creation reference from Azure](https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-an-account-sas)
 for additional details on the fields above.

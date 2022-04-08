@@ -1080,7 +1080,7 @@ type NamespaceProperties struct {
 	Critical *bool `json:"critical,omitempty"`
 	// DataCenter - Data center for the namespace
 	DataCenter *string `json:"dataCenter,omitempty"`
-	// NamespaceType - The namespace type. Possible values include: 'Messaging', 'NotificationHub'
+	// NamespaceType - The namespace type. Possible values include: 'NamespaceTypeMessaging', 'NamespaceTypeNotificationHub'
 	NamespaceType NamespaceType `json:"namespaceType,omitempty"`
 }
 
@@ -1308,6 +1308,12 @@ type OperationDisplay struct {
 	Operation *string `json:"operation,omitempty"`
 }
 
+// MarshalJSON is the custom marshaler for OperationDisplay.
+func (o OperationDisplay) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
+}
+
 // OperationListResult result of the request to list NotificationHubs operations. It contains a list of
 // operations and a URL link to get the next set of results.
 type OperationListResult struct {
@@ -1316,6 +1322,12 @@ type OperationListResult struct {
 	Value *[]Operation `json:"value,omitempty"`
 	// NextLink - READ-ONLY; URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty"`
+}
+
+// MarshalJSON is the custom marshaler for OperationListResult.
+func (olr OperationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
 }
 
 // OperationListResultIterator provides access to a complete listing of Operation values.
@@ -2218,7 +2230,7 @@ func (saarr *SharedAccessAuthorizationRuleResource) UnmarshalJSON(body []byte) e
 
 // Sku the Sku description for a namespace
 type Sku struct {
-	// Name - Name of the notification hub sku. Possible values include: 'Free', 'Basic', 'Standard'
+	// Name - Name of the notification hub sku. Possible values include: 'SkuNameFree', 'SkuNameBasic', 'SkuNameStandard'
 	Name SkuName `json:"name,omitempty"`
 	// Tier - The tier of particular sku
 	Tier *string `json:"tier,omitempty"`

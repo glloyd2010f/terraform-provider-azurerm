@@ -18,7 +18,7 @@ Manages a Virtual Machine.
 
 ## Example Usage (from an Azure Platform Image)
 
-This example provisions a Virtual Machine with Managed Disks. Other examples of the `azurerm_virtual_machine` resource can be found in [the `./examples/virtual-machines` directory within the Github Repository](https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-machines)
+This example provisions a Virtual Machine with Managed Disks. Other examples of the `azurerm_virtual_machine` resource can be found in [the `./examples/virtual-machines` directory within the Github Repository](https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/virtual-machines)
 
 ```hcl
 variable "prefix" {
@@ -107,9 +107,9 @@ The following arguments are supported:
 
 * `network_interface_ids` - (Required) A list of Network Interface ID's which should be associated with the Virtual Machine.
 
-* `os_profile_linux_config` - (Required, when a Linux machine) A `os_profile_linux_config` block.
+* `os_profile_linux_config` - (Required, when a Linux machine) An `os_profile_linux_config` block as defined below.
 
-* `os_profile_windows_config` - (Required, when a Windows machine) A `os_profile_windows_config` block.
+* `os_profile_windows_config` - (Required, when a Windows machine) An `os_profile_windows_config` block as defined below.
 
 * `vm_size` - (Required) Specifies the [size of the Virtual Machine](https://docs.microsoft.com/azure/virtual-machines/sizes-general). See also [Azure VM Naming Conventions](https://docs.microsoft.com/azure/virtual-machines/vm-naming-conventions).
 
@@ -117,9 +117,9 @@ The following arguments are supported:
 
 * `availability_set_id` - (Optional) The ID of the Availability Set in which the Virtual Machine should exist. Changing this forces a new resource to be created.
 
-* `boot_diagnostics` - (Optional) A `boot_diagnostics` block.
+* `boot_diagnostics` - (Optional) A `boot_diagnostics` block as defined below.
 
-* `additional_capabilities` - (Optional) A `additional_capabilities` block.
+* `additional_capabilities` - (Optional) An `additional_capabilities` block as defined below.
 
 * `delete_os_disk_on_termination` - (Optional) Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? Defaults to `false`.
 
@@ -129,15 +129,15 @@ The following arguments are supported:
 
 -> **Note:** This setting works when instance is deleted via Terraform only and don't forget to delete disks manually if you deleted VM manually. It can increase spending.
 
-* `identity` - (Optional) A `identity` block.
+* `identity` - (Optional) An `identity` block as defined below.
 
 * `license_type` - (Optional) Specifies the BYOL Type for this Virtual Machine. This is only applicable to Windows Virtual Machines. Possible values are `Windows_Client` and `Windows_Server`.
 
-* `os_profile` - (Optional) An `os_profile` block. Required when `create_option` in the `storage_os_disk` block is set to `FromImage`.
+* `os_profile` - (Optional) An `os_profile` block as defined below. Required when `create_option` in the `storage_os_disk` block is set to `FromImage`.
 
 * `os_profile_secrets` - (Optional) One or more `os_profile_secrets` blocks.
 
-* `plan` - (Optional) A `plan` block.
+* `plan` - (Optional) A `plan` block as defined below.
 
 * `primary_network_interface_id` - (Optional) The ID of the Network Interface (which must be attached to the Virtual Machine) which should be the Primary Network Interface for this Virtual Machine.
 
@@ -147,9 +147,9 @@ The following arguments are supported:
 
 ~> **Please Note:** Data Disks can also be attached either using this block or [the `azurerm_virtual_machine_data_disk_attachment` resource](virtual_machine_data_disk_attachment.html) - but not both.
 
-* `storage_image_reference` - (Optional) A `storage_image_reference` block.
+* `storage_image_reference` - (Optional) A `storage_image_reference` block as defined below.
 
-* `storage_os_disk` - (Required) A `storage_os_disk` block.
+* `storage_os_disk` - (Required) A `storage_os_disk` block as defined below.
 
 * `tags` - (Optional) A mapping of tags to assign to the Virtual Machine.
 
@@ -161,7 +161,7 @@ For more information on the different example configurations, please check out t
 
 ---
 
-A `additional_unattend_config` block supports the following:
+An `additional_unattend_config` block supports the following:
 
 * `pass` - (Required) Specifies the name of the pass that the content applies to. The only allowable value is `oobeSystem`.
 
@@ -193,13 +193,15 @@ A `additional_capabilities` block supports the following:
 
 A `identity` block supports the following:
 
-* `type` - (Required) The Managed Service Identity Type of this Virtual Machine. Possible values are `SystemAssigned` (where Azure will generate a Service Principal for you), `UserAssigned` (where you can specify the Service Principal ID's) to be used by this Virtual Machine using the `identity_ids` field, and `SystemAssigned, UserAssigned` which assigns both a system managed identity as well as the specified user assigned identities.
+* `type` - (Required) Specifies the type of Managed Service Identity that should be configured on this Virtual Machine. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned` (to enable both).
 
 -> **NOTE:** Managed Service Identity previously required the installation of a VM Extension, but this information [is now available via the Azure Instance Metadata Service](https://docs.microsoft.com/en-us/azure/active-directory/managed-service-identity/overview#how-does-it-work).
 
 ~> **NOTE:** When `type` is set to `SystemAssigned`, identity the Principal ID can be retrieved after the virtual machine has been created. More details are available below. See [documentation](https://docs.microsoft.com/en-us/azure/active-directory/managed-service-identity/overview) for additional information.
 
-* `identity_ids` - (Optional) Specifies a list of user managed identity ids to be assigned to the VM. Required if `type` is `UserAssigned`.
+* `identity_ids` - (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this Virtual Machine.
+
+~> **NOTE:** This is required when `type` is set to `UserAssigned` or `SystemAssigned, UserAssigned`.
 
 ---
 
@@ -249,9 +251,9 @@ A `os_profile_windows_config` block supports the following:
 
 * `timezone` - (Optional) Specifies the time zone of the virtual machine, [the possible values are defined here](http://jackstromberg.com/2017/01/list-of-time-zones-consumed-by-azure/).
 
-* `winrm` - (Optional) One or more `winrm` block.
+* `winrm` - (Optional) One or more `winrm` blocks as defined below.
 
-* `additional_unattend_config` - (Optional) A `additional_unattend_config` block.
+* `additional_unattend_config` - (Optional) An `additional_unattend_config` block as defined below.
 
 ---
 
@@ -298,7 +300,7 @@ To provision a Custom Image, the following fields are applicable:
 
 * `id` - (Required) Specifies the ID of the Custom Image which the Virtual Machine should be created from. Changing this forces a new resource to be created.
 
--> **NOTE:** An example of how to use this is available within [the `./examples/virtual-machines/managed-disks/from-custom-image` directory within the Github Repository](https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-machines/managed-disks/from-custom-image)
+-> **NOTE:** An example of how to use this is available within [the `./examples/virtual-machines/virtual_machine/managed-disks/from-custom-image` directory within the Github Repository](https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/virtual-machines/virtual_machine/managed-disks/from-custom-image)
 
 ---
 
@@ -324,7 +326,7 @@ The following properties apply when using Managed Disks:
 
 * `managed_disk_type` - (Optional) Specifies the type of managed disk to create. Possible values are either `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS` or `UltraSSD_LRS`.
 
--> **Note**: `managed_disk_type` of type `UltraSSD_LRS` is currently in preview and are not available to subscriptions that have not [requested](https://aka.ms/UltraSSDPreviewSignUp) onboarding to `Azure Ultra Disk Storage` preview. `Azure Ultra Disk Storage` is only available in `East US 2`, `North Europe`, and `Southeast Asia` regions. For more information see the `Azure Ultra Disk Storage` [product documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-enable-ultra-ssd), [product blog](https://azure.microsoft.com/en-us/blog/announcing-the-general-availability-of-azure-ultra-disk-storage/) and [FAQ](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/faq-for-disks#ultra-disks). You must also set `additional_capabilities.ultra_ssd_enabled` to `true`.
+-> **Note:** `managed_disk_type` of type `UltraSSD_LRS` is currently in preview and are not available to subscriptions that have not [requested](https://aka.ms/UltraSSDPreviewSignUp) onboarding to `Azure Ultra Disk Storage` preview. `Azure Ultra Disk Storage` is only available in `East US 2`, `North Europe`, and `Southeast Asia` regions. For more information see the `Azure Ultra Disk Storage` [product documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-enable-ultra-ssd), [product blog](https://azure.microsoft.com/en-us/blog/announcing-the-general-availability-of-azure-ultra-disk-storage/) and [FAQ](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/faq-for-disks#ultra-disks). You must also set `additional_capabilities.ultra_ssd_enabled` to `true`.
 
 * `managed_disk_id` - (Optional) Specifies the ID of an Existing Managed Disk which should be attached to this Virtual Machine. When this field is set `create_option` must be set to `Attach`.
 
@@ -394,13 +396,15 @@ The following attributes are exported:
 
 * `id` - The ID of the Virtual Machine.
 
-* `identity` - An `identity` block as defined below, which contains the Managed Service Identity information for this Virtual Machine.
+* `identity` - An `identity` block as defined below.
 
 ---
 
-A `identity` block exports the following:
+An `identity` block exports the following:
 
-* `principal_id` - The Principal ID for the Service Principal associated with the Managed Service Identity of this Virtual Machine.
+* `principal_id` - The Principal ID associated with this Managed Service Identity.
+
+* `tenant_id` - The Tenant ID associated with this Managed Service Identity.
 
 -> You can access the Principal ID via `${azurerm_virtual_machine.example.identity.0.principal_id}`
 
@@ -418,5 +422,5 @@ The `timeouts` block allows you to specify [timeouts](https://www.terraform.io/d
 Virtual Machines can be imported using the `resource id`, e.g.
 
 ```shell
-terraform import azurerm_virtual_machine.example /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup1/providers/microsoft.compute/virtualMachines/machine1
+terraform import azurerm_virtual_machine.example /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mygroup1/providers/Microsoft.Compute/virtualMachines/machine1
 ```

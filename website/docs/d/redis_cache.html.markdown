@@ -70,11 +70,15 @@ output "hostname" {
 
 * `redis_configuration` - A `redis_configuration` block as defined below.
 
+* `zones` - A list of Availability Zones in which this Redis Cache is located.
+
 ---
 
 A `patch_schedule` block supports the following:
 
 * `day_of_week` - the Weekday name for the patch item
+
+* `maintenance_window` - The ISO 8601 timespan which specifies the amount of time the Redis Cache can be updated.
 
 * `start_hour_utc` - The Start Hour for maintenance in UTC
 
